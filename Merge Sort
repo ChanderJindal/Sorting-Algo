@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+using namespace std;
+void merger(int h, int l, int m , int arr[]){
+int left_ = m-l+1,right_ = h-m;
+int left_one[left_], right_one[right_];
+for(int i = 0;i< left_;i++)
+    left_one[i] = arr[i+l];
+for(int i =0;i< right_;i++)
+    right_one[i] = arr[m+i+1];
+int i{0},j{0};//l--;
+while(i < left_ && j < right_){
+    if(left_one[i]<right_one[j]){
+        arr[l] = left_one[i];
+        i++;
+    }else{
+    arr[l] = right_one[j];
+    j++;
+    }
+    l++;
+}
+while(i< left_){
+    arr[l] = left_one[i];
+    i++; l++;
+}
+while(j < right_){
+    arr[l] = right_one[j];
+    l++; j++;
+}
+return;
+}
+void merger_sort(int h , int arr[] , int l = 0){
+if(l >= h)
+    return;
+int mid = (h-l)/2 + l;
+merger_sort(h,arr,mid+1);
+merger_sort(mid,arr,l);
+merger(h,l,mid,arr);
+return;
+}
+void printer(int n, int arr[]){
+for(int i = 0;i<n;i++)
+    cout<<arr[i]<<" ";
+cout<<endl;
+return;
+}
+/*
+int left_ = m-l+1,right_ = h-m;
+int left_one[left_], right_one[right_];
+*/
+int main(){
+	int n;
+	cin>>n;
+	int arr[n];
+	srand(time(0));
+	cout<<"Our Array is"<<endl;
+	for(int i = 0; i< n ;i++){
+        arr[i] = rand()%1000;
+        cout<<arr[i]<<" ";
+	}
+	cout<<endl;
+	merger_sort(n,arr);
+	printer(n,arr);
+	return 0;
+}
+/* // merger- failed
+int n1 = h-m+1;
+int n2 = m-l;
+int left_one[n2],right_one[n1];
+for(int i =0;i<n1;i++){
+    right_one[i] = arr[m+i+1];
+}
+for(int i =0;i<n2;i++){
+    left_one[i] = arr[l+i];
+}
+for(int i =0;i<n1;i++){
+    right_one[i] = arr[h-m-1+i];
+}
+int i{0},j{0};
+while(i<n1 && j<n2){
+    if(left_one[i] < right_one[j]){
+        arr[l] = left_one[i];
+        i++;
+    }else{
+    arr[l] = right_one[j];
+    j++;
+    }
+    l++;
+}
+while(i<n1){
+    arr[l] = left_one[i];
+    i++;l++;
+}
+while(j<n2){
+    arr[l] = right_one[j];
+    j++;l++;
+}
+*/
